@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+
 import './App.css';
+import NewList from './components/NewList';
+import List from './components/List';
+import { useState } from 'react'
 
 function App() {
+  const [lists, setLists] = useState([])
+
+  const addList = (title) =>{
+    let newList = {
+      'title': title,
+      'Tasks': []
+    }
+    setLists([...lists,newList])
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className= "container">
+          <div className="centralized header">
+            <span>Ollert</span>
+          </div>
+          <div className="centralized slogan">
+            <span>Keep it Simpler</span>
+          </div>
+          <div className="content">
+            {lists.map((list,index) =>{
+              console.log(list)
+              return(
+                <List  list={list}/>
+              )
+            })}
+            <NewList onAddList={addList}/>
+          </div>
+      </div>
     </div>
   );
 }
