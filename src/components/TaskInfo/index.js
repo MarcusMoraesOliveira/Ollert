@@ -82,9 +82,7 @@ const TaskInfo = ({task, image}) => {
         onRequestClose={() => {setIsOpen(false)}}
         style={ModalStyles}
         >
-          <div class="newLabel">
-            <button className="createLabels"> Create Labels </button>
-          </div>
+          
         </Modal>
     </div>
   )
