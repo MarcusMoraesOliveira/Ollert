@@ -1,0 +1,46 @@
+.taskWrapper{
+  display: flex;
+  
+  flex-direction: column;
+}
+
+.title input{
+  background-color: transparent;
+  border:none
+}
+
+.title input:focus{
+  background-color: white;
+}
+
+.description textarea{
+  background-color: transparent;
+  border: none;
+}
+
+.description textarea:focus{
+  background-color: white;
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+}
+
+.createLabels{
+  outline: none;
+  border: none;
+  border-radius: 3pt;
+  background-color: #4288ca;
+  color: #fff;
+}
+
+.createLabels:hover{
+  background-color: #dc61cc;
+  color: #fff;
+}
+
+.newLabel{
+  display: flex;
+  justify-content: center;
+}
