@@ -27,18 +27,6 @@
   flex-direction: column;
 }
 
-.createLabels{
-  outline: none;
-  border: none;
-  border-radius: 3pt;
-  background-color: #4288ca;
-  color: #fff;
-}
-
-.createLabels:hover{
-  background-color: #dc61cc;
-  color: #fff;
-}
 
 .newLabel{
   display: flex;

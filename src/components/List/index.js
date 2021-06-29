@@ -29,11 +29,12 @@ const priorityToColor = [{
 
 
 Modal.setAppElement('#root');
-const List = ({list}) => {
+const List = ({ list, index, addTask}) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   return(
     <div>
+      {console.log(index)}
       <div className="list">
         <span style={{ textAlign: 'center'}} className="listTitle"> <b> {list.title} </b> </span>
         <div className="footer">
@@ -46,7 +47,7 @@ const List = ({list}) => {
       onRequestClose={() => {setIsOpen(false)}}
       style={ModalStyles}
       >
-       <TaskInfo />
+       <TaskInfo addTask={addTask} index={index}/>
       </Modal>
     </div>
   )

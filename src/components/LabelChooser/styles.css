@@ -1,0 +1,65 @@
+.label{
+  min-width: 10vw;
+  height: 3vh;
+  background-color: rgb(30, 101, 163);
+  display: flex;
+  justify-content: center;
+  border-radius: 1em;
+  text-align: center;
+}
+
+.label span{
+  color: white;
+}
+
+.labelChoose{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.newLabel{
+ display: flex;
+ flex-direction: column;
+ justify-content: flex-end;
+ height: 100%;
+}
+
+.newLabel button{
+  margin-top: 0.5em;
+}
+
+.choosed{
+  border: 0.3em solid green ;
+}
+
+.deleteLabel{
+  color: red;
+  font-size: 1.5em;
+}
+
+.createLabels{
+  outline: none;
+  border: none;
+  border-radius: 3pt;
+  background-color: #4288ca;
+  color: #fff;
+}
+
+.createLabels:hover{
+  background-color: #dc61cc;
+  color: #fff;
+}
+
+.saveLabels{
+  outline: none;
+  border: none;
+  border-radius: 3pt;
+  background-color: #23e77e;
+  color: #fff;
+}
+
+.saveLabels:hover{
+  background-color: #dc61cc;
+  color: #fff;
+}
