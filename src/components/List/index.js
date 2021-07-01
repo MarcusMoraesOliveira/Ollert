@@ -4,6 +4,7 @@ import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 import Modal from 'react-modal';
 import { useState } from 'react'
 import TaskInfo from '../TaskInfo';
+import Task from '../Task';
 
 const ModalStyles = {
   content: {
@@ -34,9 +35,14 @@ const List = ({ list, index, addTask}) => {
 
   return(
     <div>
-      {console.log(index)}
+      {console.log(list.tasks)}
       <div className="list">
         <span style={{ textAlign: 'center'}} className="listTitle"> <b> {list.title} </b> </span>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+        {list.tasks.map((task,index) =>{
+          return  <Task task={task} index={index}></Task>
+          })}
+         </div>
         <div className="footer">
           <FontAwesomeIcon icon={faPlus} className="icon" onClick={ () => { setIsOpen(true)}}/>
           <span> Add a Task </span>
