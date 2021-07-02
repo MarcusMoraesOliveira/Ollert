@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [lists, setLists] = useLocalStorage("lists",[])
+  const [image, setImages] = useLocalStorage("images",[])
 
   const addList = (title) =>{
     let newList = {
@@ -17,7 +18,18 @@ function App() {
     setLists([...lists,newList])
   }
 
-  const addTask = (task,indexList,image) =>{
+  const addTask = (task,indexList) =>{
+
+    let newImage
+
+    if(task.image != ""){
+      console.log(task.image)
+       newImage = {
+        'id': uuidv4(),
+        'image': task.image
+      }
+      setImages([...image,newImage])
+    }
 
     let newTask = {
       'id': uuidv4(),
@@ -26,19 +38,17 @@ function App() {
       'deadline': task.deadline, 
       'estimatedtime': task.estimatedtime ,
       'priority': task.priority,
-      'image': image || '',
-      'label': task.labels,
+      'image': newImage?.id || '',
+      'label': task.label ,
       'colorindicator': task.indicator,
       'status': task.status
     }
 
     let listsClone = [...lists]
 
-    console.log(listsClone)
-    console.log(indexList)
+
     let item = {...listsClone[indexList]}
 
-    console.log(item)
 
     item.tasks = [...item.tasks,newTask]
 
@@ -46,7 +56,30 @@ function App() {
     
     setLists(listsClone)
   }
+ const updateTask = (updatedTask,indexList,image) =>{
 
+    console.log("AAAAAAAAA")
+    let listsClone = [...lists]
+
+    let item = {...listsClone[indexList]}
+
+    let index_task
+
+    item.tasks.map((task,index) =>{
+      if(task.id==updatedTask.id){
+        index_task = index
+      }
+    })
+
+
+    item.tasks[index_task] = updatedTask
+
+    listsClone[indexList] = item
+
+    setLists(listsClone)
+
+    console.log(lists)
+ }
   return (
     <div className="App">
       <div className= "container">
@@ -58,9 +91,8 @@ function App() {
           </div>
           <div className="content">
             {lists.map((list,index) =>{
-              console.log(index)
               return(
-                <List  list={list} index={index} addTask={addTask}/>
+                <List  list={list} index={index} addTask={addTask} updateTask={updateTask}/>
               )
             })}
             <NewList onAddList={addList}/>

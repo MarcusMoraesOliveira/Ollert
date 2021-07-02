@@ -24,7 +24,6 @@ const LabelChooser = ({ SaveLabels }) => {
       "name" : name
     }
     setLabels([...labels,newLabel])
-    console.log(labels)
   }
 
   const deleteLabel = (idx) => {
@@ -61,7 +60,6 @@ const LabelChooser = ({ SaveLabels }) => {
 
   return(
     <div className="labelChoose">
-      {console.log(choosed)}
       {labels.map((label,index) =>{
         return(
         <div style={{ display: 'flex', alignItems: 'center', marginTop: '1em', justifyContent: 'space-evenly'}}>

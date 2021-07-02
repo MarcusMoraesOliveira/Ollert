@@ -29,18 +29,25 @@ const priorityToColor = [{
 }]
 
 
+
+
 Modal.setAppElement('#root');
-const List = ({ list, index, addTask}) => {
+const List = ({ list, index, addTask, updateTask}) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [currentTask,setCurrentTask] = useState({})
+
+  const EditTask = (index) =>{
+    setCurrentTask(list.tasks[index])
+    setIsOpen(true)
+  }
 
   return(
     <div>
-      {console.log(list.tasks)}
       <div className="list">
         <span style={{ textAlign: 'center'}} className="listTitle"> <b> {list.title} </b> </span>
         <div style={{display: 'flex', flexDirection: 'column'}}>
         {list.tasks.map((task,index) =>{
-          return  <Task task={task} index={index}></Task>
+          return  <Task task={task} index={index} EditTask={EditTask}></Task>
           })}
          </div>
         <div className="footer">
@@ -50,10 +57,13 @@ const List = ({ list, index, addTask}) => {
       </div>
       <Modal
       isOpen={modalIsOpen}
-      onRequestClose={() => {setIsOpen(false)}}
+      onRequestClose={() => {
+        setIsOpen(false) 
+        setCurrentTask({})
+      }}
       style={ModalStyles}
       >
-       <TaskInfo addTask={addTask} index={index}/>
+       <TaskInfo addTask={addTask} updateTask={updateTask} index={index} task={currentTask}/>
       </Modal>
     </div>
   )

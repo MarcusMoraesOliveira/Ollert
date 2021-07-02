@@ -1,16 +1,30 @@
 import './styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDove, faStopwatch, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faStopwatch, faClock, faPauseCircle, faCheck, faTools, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-import Modal from 'react-modal'
-import LabelChooser from '../LabelChooser'
+import { Menu, MenuItem, Button   } from '@material-ui/core';
 
 
-const Task = ({ task, index }) => {
+
+const Task = ({ task, index, EditTask}) => {
   
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const statusToicon =   {'NS':faPauseCircle, 'D': faCheck, 'IP': faTools, 'C': faTimes}
+  const statusFullName =   {'NS':'Not Started', 'D': 'Done', 'IP': 'in Progress', 'C': 'Closed'}
+
   return(
-    <div className="task">
-      <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div className="task" onClick={ () => { EditTask(index) }}>
+      <div style={{display: 'flex', flexDirection: 'column', width: '80%'}}>
         <span style={{ fontSize: '1em'}}>{task.title}</span>
         <div>
           {task.deadline && 
@@ -29,7 +43,7 @@ const Task = ({ task, index }) => {
           <span>{task.priority}</span>
         </div>
         <div className="labelWrapper">
-          {console.log(task.label)}
+          
           {task.label.map((label,index) =>{
             return (
             <div className="labels"
@@ -41,7 +55,21 @@ const Task = ({ task, index }) => {
           })}
         </div>
       </div>
-      <span>xaxa</span>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '20%'}}>
+        <FontAwesomeIcon icon={statusToicon[task.status]} style={{ fontSize: '1em', color: 'black'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        </FontAwesomeIcon>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {Object.keys(statusToicon).map((key) => {
+            return <MenuItem  onClick={handleClose}> <FontAwesomeIcon icon={statusToicon[key]} style={{ fontSize: '1em', color: 'black'}} /> <span style={{marginLeft: '10px'}}> {statusFullName[key]} </span> </MenuItem>
+          })}
+        </Menu>
+      </div>
     </div>
   )
 }

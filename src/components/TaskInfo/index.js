@@ -1,22 +1,23 @@
 import './styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDove, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
+import {  faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import Modal from 'react-modal'
 import LabelChooser from '../LabelChooser'
 
 
-const TaskInfo = ({task, image , addTask , index}) => {
+const TaskInfo = ({task, addTask , index, updateTask}) => {
   const [values, setValues] = useState({
-    'title' : "insert a title here" || task?.title,
-    'description' : "insert a detailed description here" || task?.description,
-    'Deadline' : "" || task?.deadLine,
-    'EstimatedTime' : "" || task?.time,
-    'priority' : undefined || task?.priority,
-    'image' : undefined || image,
-    'labels' : [] || task?.labels,
-    'colorIndicator': undefined ||task?.indicator,
-    'status' : "" || task?.status
+    'id' : task?.id || "",
+    'title' : task?.title  || "insert a title here",
+    'description' : task?.description || "insert a detailed description here",
+    'Deadline' : task?.deadLine || "",
+    'EstimatedTime' : task?.time || "",
+    'priority' : task?.priority || undefined,
+    'image' : task?.image || "",
+    'label' : task?.label || [],
+    'colorIndicator': task?.indicator || undefined ,
+    'status' : task?.status || ""
   })
 
   const ModalStyles = {
@@ -32,6 +33,31 @@ const TaskInfo = ({task, image , addTask , index}) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState([])
 
+  const [previewSource, setPreviewSource] = useState('');
+  const [selectedFile, setSelectedFile] = useState();
+
+  const handleFileInputChange = e => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setSelectedFile(file);
+  };
+
+  const previewFile = file => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+      console.log("ta aqui entro")
+      const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+      setValues({
+        ...values,
+        'image': base64String
+      })
+      console.log(values)
+    };
+  };
+
+
   const handleChange = (ev) =>{
     setValues({
       ...values,
@@ -40,11 +66,10 @@ const TaskInfo = ({task, image , addTask , index}) => {
   }
 
   const addLabels = (selectedLabels) =>{
-    console.log(selectedLabels)
     setValues({
       ...values,
 
-      'labels': selectedLabels
+      'label': selectedLabels
     })
     closeModal()
   }
@@ -59,7 +84,7 @@ const TaskInfo = ({task, image , addTask , index}) => {
 
   return(
     <div className="taskWrapper">
-      {console.log( index )}
+
       <div className= 'title column' style={{ marginTop: '2em'}}>
         <label> Title </label>
         <input name="title" value={values.title} onChange={handleChange}></input>
@@ -87,7 +112,7 @@ const TaskInfo = ({task, image , addTask , index}) => {
       </div>
       <div className= 'Labels column' style={{ marginTop: '2em'}}>
         <label> Labels </label>
-        {values.labels.map((label,index) =>{
+        {values.label.map((label,index) =>{
           return (
             <div key={index}>
               <span> {label.name} </span>
@@ -115,8 +140,17 @@ const TaskInfo = ({task, image , addTask , index}) => {
         </select>
       </div>
 
+      <div className= 'status column' style={{ marginTop: '2em'}}>
+        <label>  Image </label>
+        <input type="file"  onChange={handleFileInputChange}/>
+      </div>
+
         <div style={{ display: 'flex', justifyContent: 'center',  marginTop: '2em'}}>
-          <button onClick={ () => addTask(values,index,undefined)}> Save Task </button>
+          {Object.keys(task).length === 0 ?  
+          <button onClick={ () => addTask(values,index,undefined)}> Save Task </button> :
+          <button onClick={ () => updateTask(values,index,undefined)}> Save Task </button>
+          }
+          
         </div>
       <Modal
         isOpen={modalIsOpen}
