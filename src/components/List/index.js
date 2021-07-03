@@ -32,7 +32,7 @@ const priorityToColor = [{
 
 
 Modal.setAppElement('#root');
-const List = ({ list, indexList, addTask, updateTask, deleteTask, getTask}) => {
+const List = ({ list, indexList, addTask, updateTask, deleteTask, getTask, deleteList}) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [currentTask,setCurrentTask] = useState({})
 
@@ -45,9 +45,11 @@ const List = ({ list, indexList, addTask, updateTask, deleteTask, getTask}) => {
     <div>
       <div className="list">
         <div style={{ display: 'flex', justifyContent: 'center'}}>
-          <span style={{ textAlign: 'center'}} className="listTitle"> <b> {list.title} </b> </span>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%'}}>
-            <FontAwesomeIcon icon={faTimes} className="icon" style={{ fontSize: '1em', color: 'red'}} />
+          <div style={{ display: 'flex', width: '80%', justifyContent: 'center', paddingLeft: '1.8em'}}>
+            <span style={{ textAlign: 'center'}} className="listTitle"> <b> {list.title} </b> </span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', width: '20%'}}>
+            <FontAwesomeIcon icon={faTimes} className="icon" style={{ fontSize: '1em', color: 'red'}} onClick={() => deleteList(indexList)}/>
           </div>
         </div>
         <div style={{display: 'flex', flexDirection: 'column'}} className="overflow">

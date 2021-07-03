@@ -18,8 +18,10 @@ function App() {
     setLists([...lists,newList])
   }
 
-  const deleteLista = (indexList) =>{
-
+  const deleteList = (indexList) =>{
+    let listsClone = [...lists]
+    listsClone.splice(indexList,1)
+    setLists(listsClone)
   }
 
   const addTask = (task,indexList) =>{
@@ -78,13 +80,10 @@ function App() {
   }
   
   const deleteTask = (indexTask,indexList) => {
-    console.log("foi")
     let listsClone = [...lists]
 
     let item = {...listsClone[indexList]}
-    console.log(indexTask)
     let item_sla = item.tasks.splice(indexTask,1)
-    console.log(item_sla)
 
     listsClone[indexList] = item
 
@@ -128,7 +127,7 @@ function App() {
             {lists.map((list,index) =>{
               return(
                 <List  list={list} indexList={index} addTask={addTask} updateTask={updateTask} key={index} 
-                deleteTask={deleteTask} getTask={getTask}/>
+                deleteTask={deleteTask} getTask={getTask} deleteList={deleteList}/>
               )
             })}
             <NewList onAddList={addList}/>
