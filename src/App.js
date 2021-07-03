@@ -29,7 +29,6 @@ function App() {
     let newImage
 
     if(task.image != ""){
-      console.log(task.image)
        newImage = {
         'id': uuidv4(),
         'image': task.image
@@ -50,7 +49,6 @@ function App() {
       'status': task.status
     }
 
-    console.log(newTask)
 
     let listsClone = [...lists]
 
@@ -95,7 +93,6 @@ function App() {
     let listsClone = [...lists]
 
     let item = {...listsClone[indexList]}
-    console.log(indexList)
 
     let index_task
 

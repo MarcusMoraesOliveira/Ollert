@@ -23,8 +23,6 @@ const Task = ({ task, index, EditTask, updateTask, indexList, deleteTask}) => {
 
   const preProcessTask = (callback,key) => {
     task['status'] = key
-    console.log(task)
-    console.log(indexList)
     callback(task,indexList,undefined)
   };
 
@@ -75,7 +73,6 @@ const Task = ({ task, index, EditTask, updateTask, indexList, deleteTask}) => {
       
       <div style={{ display: 'flex', width: '20%', flexDirection: 'column'}}>
         <div style={{ display: 'flex', justifyContent: 'flex-end'  }}>
-          {console.log(task.color)}
               <div className='circle' style={{ backgroundColor: task.color }}></div>
         </div>
         {task.status &&

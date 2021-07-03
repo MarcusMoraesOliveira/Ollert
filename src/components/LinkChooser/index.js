@@ -16,7 +16,6 @@ const LinkChosser = ({ SaveLinks }) => {
 
 
   const changeChoosedValue = (idx) =>{
-    console.log(idx)
     if(choosed.includes(idx)){
       let array = [...choosed]
       let index = array.indexOf(idx)
@@ -32,7 +31,6 @@ const LinkChosser = ({ SaveLinks }) => {
     choosed.forEach(element => {
       let delimiterindex = element.indexOf(" ")
       selectedLinks.push(lists[parseInt(element.slice(0,delimiterindex+1))].tasks[parseInt(element.slice(delimiterindex+1,element.length))].id)
-      console.log(selectedLinks)
     });
     callback(selectedLinks)
 
@@ -43,7 +41,6 @@ const LinkChosser = ({ SaveLinks }) => {
       {lists.map((list,indexList) =>{
         return(
         list.tasks.map((task,indexTask) =>{
-          console.log(task)
           return(
           <div className={ choosed.includes(indexList+" "+indexTask)? "linkedTask choosed": "linkedTask"}
           key={indexTask} 

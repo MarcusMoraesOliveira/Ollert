@@ -15,7 +15,6 @@ const ColorChosser = ({ SaveColor }) => {
 
 
   const changeChoosedValue = (idx) =>{
-    console.log(idx)
     if(choosed == idx){
       setChoosed(-1)
     }else{
