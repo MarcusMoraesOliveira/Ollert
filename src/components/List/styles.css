@@ -5,6 +5,7 @@
   min-width: 20vw;
   margin-right: 1em;
   padding: 0.2em;
+  max-height: 100vh;
 }
 
 .list span{

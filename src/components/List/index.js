@@ -32,7 +32,7 @@ const priorityToColor = [{
 
 
 Modal.setAppElement('#root');
-const List = ({ list, index, addTask, updateTask}) => {
+const List = ({ list, indexList, addTask, updateTask, deleteTask, getTask}) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [currentTask,setCurrentTask] = useState({})
 
@@ -44,10 +44,17 @@ const List = ({ list, index, addTask, updateTask}) => {
   return(
     <div>
       <div className="list">
-        <span style={{ textAlign: 'center'}} className="listTitle"> <b> {list.title} </b> </span>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <span style={{ textAlign: 'center'}} className="listTitle"> <b> {list.title} </b> </span>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%'}}>
+            <FontAwesomeIcon icon={faTimes} className="icon" style={{ fontSize: '1em', color: 'red'}} />
+          </div>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column'}} className="overflow">
         {list.tasks.map((task,index) =>{
-          return  <Task task={task} index={index} EditTask={EditTask}></Task>
+          return  <Task task={task} index={index} EditTask={EditTask} 
+          key={index} updateTask={updateTask} indexList={indexList}
+          deleteTask={deleteTask}></Task>
           })}
          </div>
         <div className="footer">
@@ -63,7 +70,7 @@ const List = ({ list, index, addTask, updateTask}) => {
       }}
       style={ModalStyles}
       >
-       <TaskInfo addTask={addTask} updateTask={updateTask} index={index} task={currentTask}/>
+       <TaskInfo addTask={addTask} updateTask={updateTask} index={indexList} task={currentTask} getTask={getTask}/>
       </Modal>
     </div>
   )

@@ -18,6 +18,10 @@ function App() {
     setLists([...lists,newList])
   }
 
+  const deleteLista = (indexList) =>{
+
+  }
+
   const addTask = (task,indexList) =>{
 
     let newImage
@@ -38,11 +42,13 @@ function App() {
       'deadline': task.deadline, 
       'estimatedtime': task.estimatedtime ,
       'priority': task.priority,
-      'image': newImage?.id || '',
+      'image': newImage?.image || '',
       'label': task.label ,
-      'colorindicator': task.indicator,
+      'color': task.color,
       'status': task.status
     }
+
+    console.log(newTask)
 
     let listsClone = [...lists]
 
@@ -56,12 +62,41 @@ function App() {
     
     setLists(listsClone)
   }
- const updateTask = (updatedTask,indexList,image) =>{
 
-    console.log("AAAAAAAAA")
+  const getTask = (id) =>{
+      let task_name
+
+      lists.map((list,index) =>{
+        list.tasks.map((task,index) =>{
+          if(task.id==id){
+            task_name = task.title
+          }
+        })
+      })
+
+      return task_name
+  }
+  
+  const deleteTask = (indexTask,indexList) => {
+    console.log("foi")
     let listsClone = [...lists]
 
     let item = {...listsClone[indexList]}
+    console.log(indexTask)
+    let item_sla = item.tasks.splice(indexTask,1)
+    console.log(item_sla)
+
+    listsClone[indexList] = item
+
+    setLists(listsClone)
+  }
+
+ const updateTask = (updatedTask,indexList,image) =>{
+
+    let listsClone = [...lists]
+
+    let item = {...listsClone[indexList]}
+    console.log(indexList)
 
     let index_task
 
@@ -77,9 +112,9 @@ function App() {
     listsClone[indexList] = item
 
     setLists(listsClone)
-
-    console.log(lists)
  }
+
+
   return (
     <div className="App">
       <div className= "container">
@@ -92,7 +127,8 @@ function App() {
           <div className="content">
             {lists.map((list,index) =>{
               return(
-                <List  list={list} index={index} addTask={addTask} updateTask={updateTask}/>
+                <List  list={list} indexList={index} addTask={addTask} updateTask={updateTask} key={index} 
+                deleteTask={deleteTask} getTask={getTask}/>
               )
             })}
             <NewList onAddList={addList}/>

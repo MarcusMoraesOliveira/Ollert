@@ -1,0 +1,26 @@
+.colorDiv{
+  min-width: 4vw;
+  height: 3vh;
+}
+
+
+.colorChoose{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.saveColor{
+ display: flex;
+ flex-direction: column;
+ justify-content: flex-end;
+ height: 100%;
+}
+
+.saveColor button{
+  margin-top: 0.5em;
+}
+
+.choosed{
+  border: 0.3em solid green ;
+}

@@ -4,20 +4,22 @@ import {  faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import Modal from 'react-modal'
 import LabelChooser from '../LabelChooser'
+import LinkChosser from '../LinkChooser'
+import ColorChosser from '../colorChosser'
 
-
-const TaskInfo = ({task, addTask , index, updateTask}) => {
+const TaskInfo = ({task, addTask , index, updateTask, getTask}) => {
   const [values, setValues] = useState({
     'id' : task?.id || "",
     'title' : task?.title  || "insert a title here",
     'description' : task?.description || "insert a detailed description here",
-    'Deadline' : task?.deadLine || "",
-    'EstimatedTime' : task?.time || "",
+    'deadline' : task?.deadLine || "",
+    'estimatedtime' : task?.estimatedtime || "",
     'priority' : task?.priority || undefined,
     'image' : task?.image || "",
     'label' : task?.label || [],
-    'colorIndicator': task?.indicator || undefined ,
-    'status' : task?.status || ""
+    'color': task?.color || undefined ,
+    'status' : task?.status || "",
+    'linked' : task?.linked || []
   })
 
   const ModalStyles = {
@@ -36,6 +38,8 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
   const [previewSource, setPreviewSource] = useState('');
   const [selectedFile, setSelectedFile] = useState();
 
+  const [modalComponent, setModalComponent] = useState('')
+
   const handleFileInputChange = e => {
     const file = e.target.files[0];
     previewFile(file);
@@ -47,7 +51,7 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setPreviewSource(reader.result);
-      console.log("ta aqui entro")
+      console.log(reader.result)
       const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
       setValues({
         ...values,
@@ -59,6 +63,8 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
 
 
   const handleChange = (ev) =>{
+    console.log(ev.target.name)
+    console.log(ev.target.value)
     setValues({
       ...values,
       [ev.target.name]: ev.target.value
@@ -74,6 +80,24 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
     closeModal()
   }
 
+  const addcolor = (selectedColor) =>{
+    setValues({
+      ...values,
+
+      'color': selectedColor
+    })
+    closeModal()
+  }
+
+  const addLinks = (selectedLinks) =>{
+    setValues({
+      ...values,
+
+      'linked': selectedLinks
+    })
+    closeModal()
+  }
+
   const closeModal = () =>{
     setIsOpen(false)
   }
@@ -84,7 +108,7 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
 
   return(
     <div className="taskWrapper">
-
+      {console.log(values)}
       <div className= 'title column' style={{ marginTop: '2em'}}>
         <label> Title </label>
         <input name="title" value={values.title} onChange={handleChange}></input>
@@ -95,11 +119,11 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
       </div>
       <div className= 'Deadline column' style={{ marginTop: '2em'}}>
         <label> Deadline </label>
-        <input  type="date" name="Deadline" value={values.Deadline} onChange={handleChange}></input>
+        <input  type="date" name="deadline" value={values.deadline} onChange={handleChange}></input>
       </div>
       <div className= 'EstimatedTime column' style={{ marginTop: '2em'}}>
         <label> Estimated Time </label>
-        <input  type="date" name="EstimatedTime" value={values.EstimatedTime} onChange={handleChange}></input>
+        <input  type="text" name="estimatedtime" value={values.estimatedtime} onChange={handleChange}></input>
       </div>
       <div className= 'Priority column' style={{ marginTop: '2em'}}>
         <label> Priority </label>
@@ -110,6 +134,7 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
             })}
         </select>
       </div>
+
       <div className= 'Labels column' style={{ marginTop: '2em'}}>
         <label> Labels </label>
         {values.label.map((label,index) =>{
@@ -120,14 +145,42 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
           )
         })}
         <div>
-          <FontAwesomeIcon icon={faPlus}  onClick={ () => { setIsOpen(true)}}/>
+          <FontAwesomeIcon icon={faPlus}  onClick={ () => { 
+            setModalComponent('labels')
+            setIsOpen(true)}}/>
           <span> Add a Label </span>
         </div>
       </div>
 
-      <div className= 'EstimatedTime column' style={{ marginTop: '2em'}}>
+      <div className= 'linked column' style={{ marginTop: '2em'}}>
+        <label> Linked Tasks </label>
+        <div>
+        <div className="overflow" style={{ display: 'flex', flexDirection: 'column', maxHeight: '10vh'}}>
+        {values.linked.map((link,index) =>{
+          return (
+            <div key={index} style={{ backgroundColor: 'black', maxWidth: '10vw', marginBottom: '1em'}}>
+              <span style={{ color: 'white'}}> {getTask(link)} </span>
+            </div>
+          )
+        })}
+        </div>
+          <FontAwesomeIcon icon={faPlus}  onClick={ () => { 
+            setModalComponent('linked')
+            setIsOpen(true)
+            }}/>
+          <span> Link a Task </span>
+        </div>
+      </div>
+
+      <div className= 'color column' style={{ marginTop: '2em'}}>
         <label> Color Indicator </label>
-        <input  type="date" name="EstimatedTime" value={values.EstimatedTime} onChange={handleChange}></input>
+        <div>
+        <FontAwesomeIcon icon={faPlus}  onClick={ () => { 
+            setModalComponent('color')
+            setIsOpen(true)
+            }}/>
+          <span> Set color </span>
+        </div>
       </div>
 
       <div className= 'status column' style={{ marginTop: '2em'}}>
@@ -156,8 +209,10 @@ const TaskInfo = ({task, addTask , index, updateTask}) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={ModalStyles}
-        >
-          <LabelChooser  SaveLabels={addLabels}/>
+        > 
+          {modalComponent == 'labels' && <LabelChooser  SaveLabels={addLabels}/>}
+          {modalComponent == 'linked' && <LinkChosser SaveLinks={addLinks}/>}
+          {modalComponent == 'color'  && <ColorChosser SaveColor={addcolor} />} 
         </Modal>
     </div>
   )

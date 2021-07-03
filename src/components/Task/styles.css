@@ -5,8 +5,9 @@
   cursor: pointer;
   display: flex;
   margin-bottom: 8px;
- 
+ padding: 0.3em;
   min-height: 20px;
+  flex-direction: column;
 }
 
 .labels{
@@ -33,3 +34,16 @@
   max-width: inherit;
 }
 
+.circle{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.image{
+  width: 13vw;
+}
+
+.status_icon:hover{
+  transform: scale(1.5);
+}
