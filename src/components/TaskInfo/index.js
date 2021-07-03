@@ -51,20 +51,18 @@ const TaskInfo = ({task, addTask , index, updateTask, getTask}) => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setPreviewSource(reader.result);
-      console.log(reader.result)
+
       const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
       setValues({
         ...values,
         'image': base64String
       })
-      console.log(values)
+
     };
   };
 
 
   const handleChange = (ev) =>{
-    console.log(ev.target.name)
-    console.log(ev.target.value)
     setValues({
       ...values,
       [ev.target.name]: ev.target.value
@@ -108,7 +106,6 @@ const TaskInfo = ({task, addTask , index, updateTask, getTask}) => {
 
   return(
     <div className="taskWrapper">
-      {console.log(values)}
       <div className= 'title column' style={{ marginTop: '2em'}}>
         <label> Title </label>
         <input name="title" value={values.title} onChange={handleChange}></input>
