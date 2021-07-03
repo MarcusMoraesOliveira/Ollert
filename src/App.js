@@ -2,7 +2,6 @@
 import './App.css';
 import NewList from './components/NewList';
 import List from './components/List';
-import { useState } from 'react'
 import useLocalStorage from './Hooks/useLocalStorage';
 import { v4 as uuidv4 } from 'uuid';
 

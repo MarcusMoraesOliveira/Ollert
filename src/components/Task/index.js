@@ -1,8 +1,8 @@
 import './styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStopwatch, faClock, faPauseCircle, faCheck, faTools, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons'
-import { useState, useEffect } from 'react'
-import { Menu, MenuItem, Button   } from '@material-ui/core';
+import { useState } from 'react'
+import { Menu, MenuItem   } from '@material-ui/core';
 import useLocalStorage from '../../Hooks/useLocalStorage';
 
 

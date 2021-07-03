@@ -1,6 +1,4 @@
 import './styles.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
 
 
